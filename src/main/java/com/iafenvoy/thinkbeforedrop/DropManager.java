@@ -4,14 +4,12 @@ import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
-import net.minecraft.block.OreBlock;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Rarity;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Arrays;
 
@@ -28,7 +26,7 @@ public class DropManager {
         Block block = null;
         if (item instanceof BlockItem)
             block = ((BlockItem) item).getBlock();
-        String name = Registry.ITEM.getId(item).getPath();
+        String name = Registries.ITEM.getId(item).getPath();
         if (Arrays.asList(config.custom.excludeItems.split(",")).contains(name))
             return false;
         if (config.internal.weapon)
@@ -44,10 +42,6 @@ public class DropManager {
         if (config.internal.armor)
             if (item instanceof ArmorItem || item instanceof ElytraItem)
                 return true;
-        if (config.internal.ore)
-            if (block != null)
-                if (block instanceof OreBlock)
-                    return true;
         if (config.internal.disc)
             if (item instanceof MusicDiscItem)
                 return true;
@@ -99,6 +93,6 @@ public class DropManager {
     }
 
     public static Text getWarningText() {
-        return new TranslatableText("tbt.warning");
+        return Text.translatable("tbt.warning");
     }
 }
