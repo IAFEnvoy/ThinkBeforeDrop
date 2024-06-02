@@ -31,10 +31,10 @@
     "thinkbeforedrop.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": "*",
     "minecraft": "1.16.x",
     "java": ">=8",
-    "fabric": ">=0.31.0",
-    "cloth-config2": ">=4.0.0"
+    "fabric": "*",
+    "cloth-config2": "*"
   }
 }
