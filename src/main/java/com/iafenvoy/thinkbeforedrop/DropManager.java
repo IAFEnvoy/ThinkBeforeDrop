@@ -1,6 +1,8 @@
-package iafenvoy.thinkbeforedrop;
+package com.iafenvoy.thinkbeforedrop;
 
-import iafenvoy.thinkbeforedrop.config.Configs;
+import me.shedaniel.autoconfig.AutoConfig;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.OreBlock;
 import net.minecraft.block.ShulkerBoxBlock;
@@ -11,76 +13,81 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
+import java.util.Arrays;
+
+@Environment(EnvType.CLIENT)
 public class DropManager {
     private static long lastDropTime = 0;
     private static int lastSlot = -1;
     private static boolean dropped = false;
 
     private static boolean shouldHandleDrop(ItemStack stack) {
-        if (!Configs.INSTANCE.open.getBooleanValue()) return false;
+        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        if (!config.enabled) return false;
         Item item = stack.getItem();
         Block block = null;
         if (item instanceof BlockItem)
             block = ((BlockItem) item).getBlock();
         String name = Registry.ITEM.getId(item).getPath();
-        if (Configs.INSTANCE.excludeItems.getStrings().contains(name))
+        if (Arrays.asList(config.custom.excludeItems.split(",")).contains(name))
             return false;
-        if (Configs.INSTANCE.weapon.getBooleanValue())
+        if (config.internal.weapon)
             if (item instanceof SwordItem || item instanceof BowItem || item instanceof CrossbowItem || item instanceof TridentItem || item instanceof ArrowItem)
                 return true;
-        if (Configs.INSTANCE.tool.getBooleanValue())
+        if (config.internal.tool)
             if (item instanceof AxeItem || item instanceof PickaxeItem || item instanceof ShovelItem || item instanceof HoeItem)
                 return true;
-        if (Configs.INSTANCE.shulker_box.getBooleanValue())
+        if (config.internal.shulkerBox)
             if (block != null)
                 if (block instanceof ShulkerBoxBlock)
                     return true;
-        if (Configs.INSTANCE.armor.getBooleanValue())
+        if (config.internal.armor)
             if (item instanceof ArmorItem || item instanceof ElytraItem)
                 return true;
-        if (Configs.INSTANCE.ore.getBooleanValue())
+        if (config.internal.ore)
             if (block != null)
                 if (block instanceof OreBlock)
                     return true;
-        if (Configs.INSTANCE.disc.getBooleanValue())
+        if (config.internal.disc)
             if (item instanceof MusicDiscItem)
                 return true;
-        if (Configs.INSTANCE.uncommon.getBooleanValue())
+        if (config.internal.uncommon)
             if (item.getRarity(stack) == Rarity.UNCOMMON)
                 return true;
-        if (Configs.INSTANCE.rare.getBooleanValue())
+        if (config.internal.rare)
             if (item.getRarity(stack) == Rarity.RARE)
                 return true;
-        if (Configs.INSTANCE.epic.getBooleanValue())
+        if (config.internal.epic)
             if (item.getRarity(stack) == Rarity.EPIC)
                 return true;
-        if (Configs.INSTANCE.enchanted.getBooleanValue()) {
+        if (config.internal.enchanted) {
             if (stack.hasEnchantments())
                 return true;
         }
-        if (Configs.INSTANCE.has_nbt.getBooleanValue()) {
+        if (config.internal.hasNbt) {
             NbtCompound tag = stack.getTag();
             if (tag != null)
                 if (tag.contains("display") || tag.getBoolean("Unbreakable") || tag.contains("CanDestroy") || tag.contains("CanPlaceOn") || tag.contains("StoredEnchantments") || tag.contains("AttributeModifiers"))
                     return true;
         }
-        if (Configs.INSTANCE.enchanted_book.getBooleanValue())
+        if (config.internal.enchantedBook)
             if (item instanceof EnchantedBookItem)
                 return true;
-        if (Configs.INSTANCE.book.getBooleanValue())
+        if (config.internal.book)
             if (item instanceof WritableBookItem || item instanceof WrittenBookItem)
                 return true;
-        return Configs.INSTANCE.customItems.getStrings().contains(name);
+        return Arrays.asList(config.custom.customItems.split(",")).contains(name);
     }
 
     public static boolean shouldThrow(ItemStack stack, int slot) {
+        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
         if (slot != lastSlot) {
             lastDropTime = 0;
             dropped = false;
         }
         if (!shouldHandleDrop(stack) || dropped) return true;
         long now = System.currentTimeMillis();
-        if (now - lastDropTime >= Configs.INSTANCE.minSecond.getDoubleValue() * 1000 && now - lastDropTime <= Configs.INSTANCE.maxSecond.getDoubleValue() * 1000) {
+        if (now - lastDropTime >= config.time.minSecond * 1000 && now - lastDropTime <= config.time.maxSecond * 1000) {
             if (stack.getCount() != 1)
                 dropped = true;
             lastDropTime = 0;

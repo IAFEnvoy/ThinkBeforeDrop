@@ -1,12 +1,14 @@
-package iafenvoy.thinkbeforedrop;
+package com.iafenvoy.thinkbeforedrop;
 
-import fi.dy.masa.malilib.config.ConfigManager;
-import iafenvoy.thinkbeforedrop.config.Configs;
-import iafenvoy.thinkbeforedrop.registry.KeyBind;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Environment(EnvType.CLIENT)
 public class ThinkBeforeDrop implements ClientModInitializer {
     public static final String MOD_ID = "thinkbeforedrop";
     public static final String MOD_NAME = "Think Before Drop";
@@ -14,7 +16,6 @@ public class ThinkBeforeDrop implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        KeyBind.register();
-        ConfigManager.getInstance().registerConfigHandler(MOD_ID, Configs.INSTANCE);
+        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
     }
 }

@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.7",
-  "package": "iafenvoy.thinkbeforedrop.mixins",
+  "package": "com.iafenvoy.thinkbeforedrop.mixins",
   "compatibilityLevel": "JAVA_8",
   "client": [
     "ClientPlayerEntityMixin"
