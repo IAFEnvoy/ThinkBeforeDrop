@@ -65,7 +65,7 @@ public class DropManager {
                 return true;
         }
         if (config.internal.hasNbt) {
-            NbtCompound tag = stack.getTag();
+            NbtCompound tag = stack.getNbt();
             if (tag != null)
                 if (tag.contains("display") || tag.getBoolean("Unbreakable") || tag.contains("CanDestroy") || tag.contains("CanPlaceOn") || tag.contains("StoredEnchantments") || tag.contains("AttributeModifiers"))
                     return true;

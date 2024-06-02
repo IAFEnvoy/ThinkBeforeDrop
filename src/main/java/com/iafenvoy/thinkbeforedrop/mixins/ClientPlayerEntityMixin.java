@@ -1,13 +1,14 @@
 package com.iafenvoy.thinkbeforedrop.mixins;
 
-import com.mojang.authlib.GameProfile;
 import com.iafenvoy.thinkbeforedrop.DropManager;
+import com.mojang.authlib.GameProfile;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,7 +29,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
     @Inject(method = "dropSelectedItem(Z)Z", at = @At("HEAD"), cancellable = true)
     public void beforeDropItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> cir) {
-        if (!DropManager.shouldThrow(this.inventory.getStack(this.inventory.selectedSlot), this.inventory.selectedSlot)) {
+        if (!DropManager.shouldThrow(this.getStackInHand(Hand.MAIN_HAND), this.getInventory().selectedSlot)) {
             assert client.player != null;
             client.player.sendMessage(DropManager.getWarningText(), true);
             cir.setReturnValue(false);
