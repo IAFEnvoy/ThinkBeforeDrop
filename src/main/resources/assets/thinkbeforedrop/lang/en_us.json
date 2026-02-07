@@ -1,0 +1,23 @@
+{
+  "config.thinkbeforedrop.category.general": "General",
+  "config.thinkbeforedrop.category.rules": "Rules",
+  "config.thinkbeforedrop.general.enabled": "Enabled",
+  "config.thinkbeforedrop.general.maxSecond": "Maximum Confirm Seconds",
+  "config.thinkbeforedrop.general.minSecond": "Minimum Confirm Seconds",
+  "config.thinkbeforedrop.rules.armor": "All Armors",
+  "config.thinkbeforedrop.rules.book": "All Books",
+  "config.thinkbeforedrop.rules.customItems": "Custom Items",
+  "config.thinkbeforedrop.rules.disc": "All Music Disc",
+  "config.thinkbeforedrop.rules.enchanted": "All Enchanted Items",
+  "config.thinkbeforedrop.rules.enchantedBook": "All Enchanted Books",
+  "config.thinkbeforedrop.rules.epic": "All Epic Items",
+  "config.thinkbeforedrop.rules.excludeItems": "Exclude Items",
+  "config.thinkbeforedrop.rules.ore": "All Ores",
+  "config.thinkbeforedrop.rules.rare": "All Rare Items",
+  "config.thinkbeforedrop.rules.shulkerBox": "All Skulker Boxes",
+  "config.thinkbeforedrop.rules.tool": "All Tools",
+  "config.thinkbeforedrop.rules.uncommon": "All Uncommon Items",
+  "config.thinkbeforedrop.rules.weapon": "All Weapons",
+  "screen.thinkbeforedrop.client.title": "Think Before Drop Settings",
+  "thinkbeforedrop.warning": "Press Q again to confirm dropping!"
+}

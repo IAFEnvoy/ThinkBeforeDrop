@@ -1,0 +1,23 @@
+{
+  "config.thinkbeforedrop.category.general": "通用",
+  "config.thinkbeforedrop.category.rules": "规则",
+  "config.thinkbeforedrop.general.enabled": "启用",
+  "config.thinkbeforedrop.general.maxSecond": "最大确认时间（秒数）",
+  "config.thinkbeforedrop.general.minSecond": "最小确认时间（秒数）",
+  "config.thinkbeforedrop.rules.armor": "所有装备",
+  "config.thinkbeforedrop.rules.book": "所有书与笔和成书",
+  "config.thinkbeforedrop.rules.customItems": "自定义物品",
+  "config.thinkbeforedrop.rules.disc": "所有唱片",
+  "config.thinkbeforedrop.rules.enchanted": "所有附魔物品",
+  "config.thinkbeforedrop.rules.enchantedBook": "所有附魔书",
+  "config.thinkbeforedrop.rules.epic": "所有史诗物品",
+  "config.thinkbeforedrop.rules.excludeItems": "排除物品",
+  "config.thinkbeforedrop.rules.ore": "所有矿石",
+  "config.thinkbeforedrop.rules.rare": "所有稀有物品",
+  "config.thinkbeforedrop.rules.shulkerBox": "所有潜影盒",
+  "config.thinkbeforedrop.rules.tool": "所有工具",
+  "config.thinkbeforedrop.rules.uncommon": "所有少见物品",
+  "config.thinkbeforedrop.rules.weapon": "所有武器",
+  "screen.thinkbeforedrop.client.title": "丢弃物品保护设置",
+  "thinkbeforedrop.warning": "再次按下Q以确认丢出此物品"
+}

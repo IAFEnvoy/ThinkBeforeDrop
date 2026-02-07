@@ -15,8 +15,15 @@
   "license": "${mod_license}",
   "environment": "*",
   "entrypoints": {
+    "client": [
+      "com.iafenvoy.thinkbeforedrop._loader.fabric.ThinkBeforeDropFabricClient"
+    ],
+    "modmenu": [
+      "com.iafenvoy.thinkbeforedrop._loader.fabric.compat.ModMenu"
+    ]
   },
   "mixins": [
+    "thinkbeforedrop.mixins.json"
   ],
   "depends": {
     "minecraft": [${supported_minecraft_versions}]
