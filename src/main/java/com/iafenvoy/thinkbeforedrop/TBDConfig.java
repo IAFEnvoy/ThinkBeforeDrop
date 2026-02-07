@@ -15,7 +15,7 @@ public final class TBDConfig extends AutoInitConfigContainer {
     public final Rules rules = new Rules();
 
     public TBDConfig() {
-        super(/*? >=1.21 {*//*ResourceLocation.fromNamespaceAndPath*//*?} else {*/new ResourceLocation/*?}*/(ThinkBeforeDrop.MOD_ID, "client"), "screen.thinkbeforedrop.client.title", "./config/thinkbeforedrop.json");
+        super(/*? >=1.21 {*/ResourceLocation.fromNamespaceAndPath/*?} else {*//*new ResourceLocation*//*?}*/(ThinkBeforeDrop.MOD_ID, "client"), "screen.thinkbeforedrop.client.title", "./config/thinkbeforedrop.json");
     }
 
     @SuppressWarnings("unused")

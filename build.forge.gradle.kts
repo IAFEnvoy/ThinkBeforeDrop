@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("org.spongepowered:com.iafenvoy.thinkbeforedrop.mixin:0.8.5:processor")
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
     modImplementation("maven.modrinth:jupiter:${property("deps.jupiter")}")
 }
 
@@ -134,11 +134,13 @@ publishMods {
         projectId = property("publish.modrinth") as String
         accessToken = env.MODRINTH_API_KEY.orNull()
         minecraftVersions.addAll(supportedMinecraftVersions)
+        requires("jupiter")
     }
 
     curseforge {
         projectId = property("publish.curseforge") as String
         accessToken = env.CURSEFORGE_API_KEY.orNull()
         minecraftVersions.addAll(supportedMinecraftVersions)
+        requires("jupiter")
     }
 }

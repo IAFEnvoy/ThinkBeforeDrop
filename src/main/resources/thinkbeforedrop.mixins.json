@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.iafenvoy.thinkbeforedrop.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
@@ -10,5 +10,6 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "refmap": "thinkbeforedrop-refmap.json"
 }
