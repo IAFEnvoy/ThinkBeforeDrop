@@ -15,11 +15,11 @@ public final class TBDConfig extends AutoInitConfigContainer {
     public final Rules rules = new Rules();
 
     public TBDConfig() {
-        super(ResourceLocation.fromNamespaceAndPath(ThinkBeforeDrop.MOD_ID, "client"), "screen.thinkbeforedrop.client.title", "./config/thinkbeforedrop.json");
+        super(/*? >=1.21 {*//*ResourceLocation.fromNamespaceAndPath*//*?} else {*/new ResourceLocation/*?}*/(ThinkBeforeDrop.MOD_ID, "client"), "screen.thinkbeforedrop.client.title", "./config/thinkbeforedrop.json");
     }
 
     @SuppressWarnings("unused")
-    public static class General extends AutoInitConfigCategoryBase {//设置两次按下Q的允许间隔
+    public static class General extends AutoInitConfigCategoryBase {
         public final BooleanEntry enabled = BooleanEntry.builder("config.thinkbeforedrop.general.enabled", false).key("enabled").build();
         public final SeparatorEntry s1 = SeparatorEntry.builder().build();
         public final DoubleEntry minSecond = DoubleEntry.builder("config.thinkbeforedrop.general.minSecond", 0.5).key("minSecond").build();

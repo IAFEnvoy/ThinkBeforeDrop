@@ -25,7 +25,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Inject(method = "drop(Z)Z", at = @At("HEAD"), cancellable = true)
     public void beforeDropItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> cir) {
-        if (DropManager.shouldThrow(this.getInventory().getSelectedItem(), this.getInventory().getSelectedSlot()))
+        if (DropManager.shouldThrow(this.getInventory()/*? >=1.21.5 {*//*.getSelectedItem()*//*?} else {*/.getSelected()/*?}*/, this.getInventory()/*? >=1.21.5 {*//*.getSelectedSlot()*//*?} else {*/.selected/*?}*/))
             return;
         assert this.minecraft.player != null;
         this.minecraft.player.displayClientMessage(DropManager.getWarningText(), true);

@@ -2,7 +2,9 @@ package com.iafenvoy.thinkbeforedrop;
 
 import com.iafenvoy.jupiter.config.entry.BooleanEntry;
 import com.mojang.datafixers.util.Either;
-import net.minecraft.core.component.DataComponents;
+//? >=1.20.5 {
+//import net.minecraft.core.component.DataComponents;
+//?}
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -37,24 +39,36 @@ public final class DropRules {
         return itemOrTag.stream().<Either<String, String>>map(x -> x.startsWith("#") ? Either.right(x.substring(1)) : Either.left(x))
                 .map(x -> x.mapBoth(ResourceLocation::tryParse, ResourceLocation::tryParse))
                 .filter(x -> x.map(Objects::nonNull, Objects::nonNull))
-                .map(x -> x.mapBoth(BuiltInRegistries.ITEM::getValue, rl -> TagKey.create(Registries.ITEM, rl)))
+                .map(x -> x.mapBoth(BuiltInRegistries.ITEM::/*? >=1.21 {*//*getValue*//*?} else {*/get/*?}*/, rl -> TagKey.create(Registries.ITEM, rl)))
                 .anyMatch(x -> x.map(stack::is, stack::is));
     }
 
     static {
         TBDConfig.Rules rules = TBDConfig.INSTANCE.rules;
-        registerStack(rules.weapon, stack -> stack.is(ItemTags.SWORD_ENCHANTABLE) || stack.is(ItemTags.BOW_ENCHANTABLE) || stack.is(ItemTags.CROSSBOW_ENCHANTABLE) || stack.is(ItemTags.TRIDENT_ENCHANTABLE) || stack.is(ItemTags.ARROWS) || stack.is(ItemTags.MACE_ENCHANTABLE));
+        //? >=1.20.5 {
+        //registerStack(rules.weapon, stack -> stack.is(ItemTags.SWORD_ENCHANTABLE) || stack.is(ItemTags.BOW_ENCHANTABLE) || stack.is(ItemTags.CROSSBOW_ENCHANTABLE) || stack.is(ItemTags.TRIDENT_ENCHANTABLE) || stack.is(ItemTags.ARROWS) || stack.is(ItemTags.MACE_ENCHANTABLE));
+        //?} else {
+        registerItem(rules.weapon, item -> item instanceof SwordItem || item instanceof BowItem || item instanceof CrossbowItem || item instanceof TridentItem || item instanceof ArrowItem);
+        //?}
         registerStack(rules.tool, stack -> stack.is(ItemTags.AXES) || stack.is(ItemTags.PICKAXES) || stack.is(ItemTags.SHOVELS) || stack.is(ItemTags.HOES));
         registerStack(rules.shulkerBox, stack -> stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock);
-        registerStack(rules.armor, stack -> stack.has(DataComponents.EQUIPPABLE));
+        //? >=1.21 {
+        //registerStack(rules.armor, stack -> stack.has(DataComponents.EQUIPPABLE));
+        //?} else {
+        registerItem(rules.armor, item -> item instanceof ArmorItem || item instanceof ElytraItem);
+        //?}
         // Only ores and sculk use DropExperienceBlock
         registerStack(rules.ore, stack -> stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof DropExperienceBlock && !(blockItem.getBlock() instanceof SculkBlock));
-        registerStack(rules.disc, stack -> stack.getItem() instanceof DiscFragmentItem || stack.has(DataComponents.JUKEBOX_PLAYABLE));
-        registerStack(rules.uncommon, stack -> stack.get(DataComponents.RARITY) == Rarity.UNCOMMON);
-        registerStack(rules.rare, stack -> stack.get(DataComponents.RARITY) == Rarity.RARE);
-        registerStack(rules.epic, stack -> stack.get(DataComponents.RARITY) == Rarity.EPIC);
+        registerStack(rules.disc, stack -> stack.getItem() instanceof DiscFragmentItem || stack/*? >=1.21 {*//*.has(DataComponents.JUKEBOX_PLAYABLE)*//*?} else {*/.getItem() instanceof RecordItem/*?}*/);
+        registerStack(rules.uncommon, stack -> stack/*? >=1.20.5 {*//*.get(DataComponents.RARITY)*//*?} else {*/.getRarity()/*?}*/ == Rarity.UNCOMMON);
+        registerStack(rules.rare, stack -> stack/*? >=1.20.5 {*//*.get(DataComponents.RARITY)*//*?} else {*/.getRarity()/*?}*/ == Rarity.RARE);
+        registerStack(rules.epic, stack -> stack/*? >=1.20.5 {*//*.get(DataComponents.RARITY)*//*?} else {*/.getRarity()/*?}*/ == Rarity.EPIC);
         registerStack(rules.enchanted, ItemStack::isEnchanted);
-        registerStack(rules.enchantedBook, stack -> stack.has(DataComponents.STORED_ENCHANTMENTS));
+        //? >=1.20.5 {
+        //registerStack(rules.enchantedBook, stack -> stack.has(DataComponents.STORED_ENCHANTMENTS));
+        //?} else {
+        registerItem(rules.enchantedBook, item -> item instanceof EnchantedBookItem);
+        //?}
         registerItem(rules.book, item -> item instanceof WritableBookItem || item instanceof WrittenBookItem);
     }
 }
